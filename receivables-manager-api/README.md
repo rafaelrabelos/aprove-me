@@ -17,6 +17,7 @@ Esta API permite cadastrar, consultar, editar e excluir recebíveis e cedentes, 
 - [Níveis do desafio](#níveis-do-desafio)
 - [Docker](#docker)
 - [Referências](#referências)
+- [Estrutura de Pastas do Projeto](#estrutura-de-pastas-do-projeto)
 
 ## Requisitos
 
@@ -112,3 +113,37 @@ docker-compose up --build
 - [NestJS Documentation](https://docs.nestjs.com)
 - [Prisma Documentation](https://www.prisma.io/docs/)
 - [Desafio Bankme](../README.md)
+
+# Estrutura de Pastas do Projeto
+
+O projeto utiliza uma estrutura modular dentro da pasta `src`, organizada por contexto e responsabilidade. Os imports são facilitados por aliases configurados via `module-alias` e `tsconfig.json`.
+
+## Estrutura
+
+```
+src/
+├── application/   # Serviços, casos de uso e lógica de aplicação
+├── domain/        # Entidades, interfaces e regras de negócio
+├── infra/         # Implementações de infraestrutura (DB, providers, etc)
+├── presentation/  # Controllers, DTOs e validações das rotas
+├── main.ts        # Ponto de entrada da aplicação
+```
+
+## Aliases
+
+- `@application` → src/application
+- `@domain` → src/domain
+- `@infra` → src/infra
+- `@presentation` → src/presentation
+
+## Exemplo de Importação
+
+```typescript
+import { AppService } from '@application/services/app.service';
+```
+
+## Benefícios
+
+- Organização clara por contexto
+- Imports mais limpos e fáceis de manter
+- Facilidade para escalar

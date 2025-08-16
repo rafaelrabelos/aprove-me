@@ -23,6 +23,7 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "module-alias": "^2.2.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -67,5 +68,11 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "_moduleAliases": {
+    "@presentation": "dist/src/presentation",
+    "@domain": "dist/src/domain",
+    "@application": "dist/src/application",
+    "@infra": "dist/src/infra"
   }
 }
