@@ -1,12 +1,12 @@
-import { UUID } from 'crypto';
+import { UuidValueObj } from '@domain/valueObjects';
 
-export abstract class Entity<P extends EntityProps> {
-  _id?: UUID;
+export abstract class Entity<P> {
+  protected readonly _id: UuidValueObj;
   createdDate: Date;
 
-  constructor(protected _props: Partial<P>) {
+  constructor(protected _props: EntityProps) {
     this.createdDate = new Date();
-    this._id = _props._id;
+    this._id = new UuidValueObj({ uuid: _props.id });
   }
 
   public get id(): () => string {
@@ -33,5 +33,5 @@ export abstract class Entity<P extends EntityProps> {
   abstract validate(): boolean;
 }
 export interface EntityProps {
-  _id?: UUID;
+  id: string;
 }
