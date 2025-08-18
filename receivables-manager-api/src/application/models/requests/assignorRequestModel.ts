@@ -1,16 +1,28 @@
 import { BaseRequestModel } from './baseRequest';
-import { IsUUID, IsEmail, IsPhoneNumber, IsString } from 'class-validator';
+import {
+  IsUUID,
+  IsEmail,
+  IsPhoneNumber,
+  IsString,
+  Length,
+  Max,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateAssignorProps {
   @IsUUID()
   id: string;
   @IsString()
+  @Length(11, 30)
   document: string;
   @IsEmail()
+  @MaxLength(140)
   email: string;
   @IsPhoneNumber()
+  @MaxLength(20)
   phone: string;
   @IsString()
+  @MaxLength(140)
   name: string;
 }
 
