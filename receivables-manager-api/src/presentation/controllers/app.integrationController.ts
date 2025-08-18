@@ -1,12 +1,27 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { IntegrationService } from '@application/services/app.integrationService';
+import {
+  CreateAssignorRequestModel,
+  CreateAssignorProps,
+} from '@application/models/requests/assignorRequestModel';
+import {
+  CreateReceivableRequestModel,
+  CreateReceivableProps,
+} from '@src/application/models/requests/receivableRequestModel';
 
 @Controller('integration')
 export class IntegrationController {
   constructor(private readonly integrationService: IntegrationService) {}
 
-  @Get()
-  getHello(): string {
-    return this.integrationService.getHello();
+  @Post('payable/receivable')
+  async createReceivable(@Body() body: CreateReceivableProps) {
+    const createReceivable = new CreateReceivableRequestModel(body);
+    return this.integrationService.createReceivable(createReceivable);
+  }
+
+  @Post('payable/assignor')
+  async createAssignor(@Body() body: CreateAssignorProps) {
+    const createAssignor = new CreateAssignorRequestModel(body);
+    return this.integrationService.createAssignor(createAssignor);
   }
 }
