@@ -11,17 +11,17 @@ import {
 
 @Controller('integration')
 export class IntegrationController {
-  constructor(private readonly integrationService: IntegrationService) {}
+  constructor(private readonly _integrationService: IntegrationService) {}
 
   @Post('payable/receivable')
   async createReceivable(@Body() body: CreateReceivableProps) {
     const createReceivable = new CreateReceivableRequestModel(body);
-    return this.integrationService.createReceivable(createReceivable);
+    return this._integrationService.createReceivable(createReceivable);
   }
 
   @Post('payable/assignor')
   async createAssignor(@Body() body: CreateAssignorProps) {
     const createAssignor = new CreateAssignorRequestModel(body);
-    return this.integrationService.createAssignor(createAssignor);
+    return this._integrationService.createAssignor(createAssignor);
   }
 }

@@ -1,9 +1,5 @@
 export abstract class BaseRequestModel<T> {
-  protected _data: T;
-
-  constructor(data: T) {
-    this._data = data;
-  }
+  constructor(protected readonly _data: T) {}
 
   abstract getData: () => T;
 }

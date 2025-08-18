@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+//import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@src/../generated/prisma';
 
 /**
  * SqliteConnector handles the connection to the SQLite database using Prisma

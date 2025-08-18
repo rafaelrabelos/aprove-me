@@ -1,24 +1,24 @@
 import { ReceivableEntity } from '@domain/entities/receivableEntity';
-import { IUseCase } from '@domain/contracts/IReceivablesUseCase';
-import type { IReceivablesRepository } from '@domain/contracts/IReceivablesRepository';
-import { receivablesRepository } from '@infra/repository/receivablesRepository';
-import { Injectable } from '@nestjs/common';
+import { IUseCase } from '@src/domain/contracts/IUseCase';
+import { IReceivablesRepository } from '@domain/contracts/IReceivablesRepository';
+import { Inject, Injectable } from '@nestjs/common';
+import { CreateReceivableDto } from '@domain/dtos/createReceivableDto';
 
 @Injectable()
 export default class CreateReceivablesUseCase
-  implements IUseCase<Props, ReceivableEntity | undefined>
+  implements IUseCase<CreateReceivableDto, ReceivableEntity | undefined>
 {
   constructor(
+    @Inject(IReceivablesRepository)
     private readonly _receivablesRepository: IReceivablesRepository,
   ) {}
-
-  public async execute({ id, value, emissionDate, assignor }: Props) {
-    const receivableEntity = new ReceivableEntity({
-      id,
-      value,
-      emissionDate,
-      assignor,
-    });
+  /**
+   * Executes the use case to create a receivable.
+   * @param dto - The data transfer object containing receivable details.
+   * @returns A promise that resolves to the created ReceivableEntity or undefined.
+   */
+  public async execute(dto: CreateReceivableDto) {
+    const receivableEntity = dto.getData();
     const userAccount =
       await this._receivablesRepository.create(receivableEntity);
 
@@ -28,15 +28,4 @@ export default class CreateReceivablesUseCase
   private result(entity?: ReceivableEntity) {
     return entity;
   }
-}
-
-export const createReceivablesUseCase = new CreateReceivablesUseCase(
-  receivablesRepository,
-);
-
-export interface Props {
-  id: string;
-  value: number;
-  emissionDate: Date;
-  assignor: string;
 }

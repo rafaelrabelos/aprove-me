@@ -5,18 +5,18 @@ import { UuidValueObj } from '@domain/valueObjects';
 export class ReceivableEntity extends Entity<Props> {
   private readonly _value: number;
   private readonly _emissionDate: Date;
-  private readonly _assignorId: UuidValueObj;
+  private readonly _assignor: UuidValueObj;
 
   constructor(props: Props) {
     super({ id: props.id });
     this._value = props.value;
     this._emissionDate = props.emissionDate;
-    this._assignorId = new UuidValueObj({ uuid: props.assignor });
+    this._assignor = new UuidValueObj({ uuid: props.assignor });
     this.validate();
   }
 
   public get getAssigneeId(): () => UUID {
-    return () => this._assignorId.getAsUUID();
+    return () => this._assignor.getAsUUID();
   }
 
   public get getValue(): () => number {
@@ -28,7 +28,7 @@ export class ReceivableEntity extends Entity<Props> {
   }
 
   public get getAssignorId(): () => UUID {
-    return () => this._assignorId.getAsUUID();
+    return () => this._assignor.getAsUUID();
   }
 
   public areEqualTo(other: typeof this): boolean {
@@ -36,9 +36,9 @@ export class ReceivableEntity extends Entity<Props> {
   }
 
   public validate() {
-    const { _assignorId } = this;
+    const { _assignor } = this;
 
-    return [_assignorId].some((v) => !v.validate());
+    return [_assignor].some((v) => !v.validate());
   }
 }
 export interface Props extends EntityProps {

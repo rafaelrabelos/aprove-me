@@ -1,43 +1,41 @@
-import {
-  ReceivablesContext,
-  receivablesContext,
-} from '@src/infra/contexts/receivablesContext';
-import { ReceivableEntity } from '@src/domain/entities/receivableEntity';
+import { ReceivablesContext } from '@infra/contexts/receivablesContext';
+import { ReceivableEntity } from '@domain/entities/receivableEntity';
 import { Injectable } from '@nestjs/common';
-import { IReceivablesRepository } from '@src/domain/contracts/IReceivablesRepository';
+import { IReceivablesRepository } from '@domain/contracts/IReceivablesRepository';
 
 @Injectable()
 export default class ReceivablesRepository implements IReceivablesRepository {
-  private readonly _context: ReceivablesContext;
+  constructor(private readonly _context: ReceivablesContext) {}
 
-  constructor(context: ReceivablesContext) {
-    this._context = context;
-  }
+  public async create(receivable: ReceivableEntity): Promise<ReceivableEntity> {
+    const repo = await this._context.receivables();
+    const data = {
+      id: receivable.id(),
+      value: receivable.getValue(),
+      emissionDate: receivable.getEmissionDate(),
+      assignor: receivable.getAssignorId(),
+    };
 
-  public async create(
-    receivable: ReceivableEntity,
-  ): Promise<ReceivableEntity | undefined> {
-    const receivablesRepo = await this._context.receivables();
-    const saved = await receivablesRepo.Save(receivable);
+    const saved = await repo.create({ data });
 
-    return saved ? saved._id : undefined;
+    const resultEntity = new ReceivableEntity(saved);
+
+    return resultEntity;
   }
 
   public async getAll(): Promise<ReceivableEntity[]> {
-    const receivables = await this._context.receivables();
-    const found = await receivables.findMany();
+    const repo = await this._context.receivables();
+
+    const found = await repo.findMany();
 
     return found.map((item) => new ReceivableEntity(item));
   }
 
   public async getById(id: string): Promise<ReceivableEntity | null> {
-    const receivable = await this._context.receivables();
-    const found = await receivable.findUnique({ where: { id } });
+    const repo = await this._context.receivables();
+
+    const found = await repo.findUnique({ where: { id } });
 
     return found ? new ReceivableEntity(found) : null;
   }
 }
-
-export const receivablesRepository = new ReceivablesRepository(
-  receivablesContext,
-);

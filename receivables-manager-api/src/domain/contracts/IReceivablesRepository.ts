@@ -4,9 +4,9 @@ export interface IReceivablesRepository {
   /**
    * Adiciona um novo recebível ao banco de dados.
    * @param receivable ReceivableEntity com os dados do recebível.
-   * @returns Promise<ReceivableEntity> O recebível criado.
+   * @returns Promise<string | undefined> O ID do recebível criado.
    */
-  create(receivable: ReceivableEntity): Promise<ReceivableEntity | undefined>;
+  create(receivable: ReceivableEntity): Promise<ReceivableEntity>;
 
   /**
    * Retorna todos os recebíveis cadastrados.
@@ -21,3 +21,5 @@ export interface IReceivablesRepository {
    */
   getById(id: string): Promise<ReceivableEntity | null>;
 }
+
+export const IReceivablesRepository = Symbol('IReceivablesRepository');

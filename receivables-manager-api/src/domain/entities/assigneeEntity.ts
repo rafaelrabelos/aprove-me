@@ -12,7 +12,7 @@ export class AssigneeEntity extends Entity<Props> {
   private readonly _name: string;
 
   constructor(props: Props) {
-    super({ _id: props._id });
+    super({ id: props.id });
     this._document = new DocumentValueObj({ document: props.document });
     this._email = new EmailValueObj({ email: props.email });
     this._phone = new PhoneValueObj({ phone: props.phone });
