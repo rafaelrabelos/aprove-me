@@ -28,7 +28,7 @@ model Assignor {
 model Receivable {
   id           String   @id @default(uuid())
   value        Float
-  emissionDate DateTime
+  emissionDate String
   assignor     String
   assignorFk   Assignor @relation(fields: [assignor], references: [id])
   createdAt    DateTime @default(now())

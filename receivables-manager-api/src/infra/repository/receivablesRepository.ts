@@ -12,7 +12,7 @@ export default class ReceivablesRepository implements IReceivablesRepository {
     const data = {
       id: receivable.id(),
       value: receivable.getValue(),
-      emissionDate: receivable.getEmissionDate(),
+      emissionDate: receivable.getEmissionDate().toISOString(),
       assignor: receivable.getAssignorId(),
     };
 

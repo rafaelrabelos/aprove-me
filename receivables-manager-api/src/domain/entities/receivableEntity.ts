@@ -10,7 +10,7 @@ export class ReceivableEntity extends Entity<Props> {
   constructor(props: Props) {
     super({ id: props.id });
     this._value = props.value;
-    this._emissionDate = props.emissionDate;
+    this._emissionDate = new Date(props.emissionDate);
     this._assignor = new UuidValueObj({ uuid: props.assignor });
     this.validate();
   }
@@ -43,6 +43,6 @@ export class ReceivableEntity extends Entity<Props> {
 }
 export interface Props extends EntityProps {
   value: number;
-  emissionDate: Date;
+  emissionDate: string;
   assignor: string;
 }

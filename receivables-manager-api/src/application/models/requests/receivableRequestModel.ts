@@ -1,13 +1,20 @@
 import { BaseRequestModel } from './baseRequest';
-import { IsDate, IsNotEmpty, IsDecimal, IsUUID } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsDecimal,
+  IsUUID,
+  isDateString,
+  IsNumber,
+} from 'class-validator';
 
 export class CreateReceivableProps {
   @IsUUID()
   id: string;
-  @IsDecimal()
+  @IsNumber()
   value: number;
-  @IsDate()
-  emissionDate: Date;
+  @IsDateString()
+  emissionDate: string;
   @IsUUID()
   assignor: string;
 }
@@ -30,7 +37,7 @@ export class CreateReceivableRequestModel extends BaseRequestModel<CreateReceiva
   }
 
   public get getEmissionDate(): () => Date {
-    return () => this.getData().emissionDate;
+    return () => new Date(this.getData().emissionDate);
   }
 
   public get getAssignor(): () => string {

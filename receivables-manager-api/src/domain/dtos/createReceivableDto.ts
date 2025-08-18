@@ -22,6 +22,6 @@ export class CreateReceivableDto extends BaseDto<Props, ReceivableEntity> {
 type Props = {
   id: string;
   value: number;
-  emissionDate: Date;
+  emissionDate: string;
   assignor: string;
 };
